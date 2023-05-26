@@ -5,6 +5,7 @@ require("dotenv").config();
 const app = express();
 const { sequelize } = require("./db");
 const port = process.env.PORT || 3000;
+const userRoutes = require("./controllers/user.controller");
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -20,9 +21,8 @@ sequelize
 		console.log(err);
 	});
 
-app.get("/", (_req, res) => {
-	res.send("Hello World!");
-});
+app.use("/users", userRoutes);
+
 app.get("*", (_req, res) => {
 	res.status(404).send("Not found");
 });
