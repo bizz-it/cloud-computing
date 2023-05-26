@@ -15,7 +15,6 @@ userRouter.post("/register", async (req, res) => {
 
 	const { error } = schema.validate(req.body);
 	if (error) {
-		console.log(error.details);
 		return res
 			.status(400)
 			.send({ status: false, message: error.details[0].message });
@@ -38,6 +37,59 @@ userRouter.post("/register", async (req, res) => {
 		.catch((err) => {
 			res.send(err);
 		});
+});
+
+userRouter.post("/login", async (req, res) => {
+	const schema = joi.object({
+		email: joi.string().email().required(),
+		password: joi.string().min(6).required(),
+	});
+
+	const { error } = schema.validate(req.body);
+
+	if (error) {
+		return res
+			.status(400)
+			.send({ status: false, message: error.details[0].message });
+	}
+
+	const data = {
+		email: req.body.email,
+		password: req.body.password,
+	};
+
+	try {
+		const user = await User.getUserByEmail(data.email);
+		if (user.status === 200) {
+			const validPassword = await bcrypt.compare(
+				data.password,
+				user.data.password
+			);
+			if (!validPassword) {
+				return res
+					.status(400)
+					.send({ status: false, message: "Invalid email or password" });
+			}
+			const token = jwt.generateToken(user.data);
+			return res.status(200).send({
+				status: true,
+				message: "Login success!",
+				data: {
+					id: user.data.id,
+					nama: user.data.nama,
+					email: user.data.email,
+					no_telp: user.data.no_telp,
+					is_verified: user.data.is_verified,
+				},
+				token: token,
+			});
+		}
+		return res
+			.status(404)
+			.send({ status: false, message: "Invalid email or password" });
+	} catch (error) {
+		return res.status(500).send({ status: false, message: error.message });
+	}
 });
 
 module.exports = userRouter;
