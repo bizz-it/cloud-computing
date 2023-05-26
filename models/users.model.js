@@ -19,10 +19,38 @@ const getAllUsers = async () => {
 const getUserById = async (id) => {
 	try {
 		const user = await User.findByPk(id);
+		if (user) {
+			return {
+				status: 200,
+				message: "User retrieved!",
+				data: user,
+			};
+		}
 		return {
-			status: 200,
-			message: "User retrieved!",
-			data: user,
+			status: 404,
+			message: "User not found!",
+		};
+	} catch (err) {
+		return {
+			status: 500,
+			message: err.message,
+		};
+	}
+};
+
+const getUserByEmail = async (email) => {
+	try {
+		const user = await User.findOne({ where: { email: email } });
+		if (user) {
+			return {
+				status: 200,
+				message: "User retrieved!",
+				data: user,
+			};
+		}
+		return {
+			status: 404,
+			message: "User not found!",
 		};
 	} catch (err) {
 		return {
@@ -96,6 +124,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
 	getAllUsers,
 	getUserById,
+	getUserByEmail,
 	createUser,
 	updateUser,
 	deleteUser,
