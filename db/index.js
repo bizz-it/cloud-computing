@@ -61,16 +61,6 @@ const User = sequelize.define("users", {
 		type: DataTypes.STRING(6),
 		allowNull: true,
 	},
-	createdAt: {
-		type: DataTypes.DATE,
-		defaultValue: DataTypes.NOW,
-		allowNull: false,
-	},
-	updatedAt: {
-		type: DataTypes.DATE,
-		defaultValue: DataTypes.NOW,
-		allowNull: false,
-	},
 });
 
 const FranchiseCategory = sequelize.define("franchise_categories", {
