@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 sequelize
-	.sync({ alter: true })
+	.sync({ force: true })
 	.then(() => {
 		console.log("Drop and re-sync db.");
 	})
