@@ -114,9 +114,39 @@ const Franchise = sequelize.define("franchises", {
 		type: DataTypes.BOOLEAN,
 		defaultValue: false,
 	},
-	otp: {
-		type: DataTypes.STRING(6),
-		allowNull: true,
+});
+
+const Review = sequelize.define("reviews", {
+	id: {
+		type: DataTypes.UUID,
+		defaultValue: UUIDV4,
+		primaryKey: true,
+		allowNull: false,
+	},
+	rating: {
+		type: DataTypes.INTEGER,
+		allowNull: false,
+	},
+	review: {
+		type: DataTypes.STRING(100),
+		allowNull: false,
+	},
+});
+
+const FranchisePackage = sequelize.define("franchise_packages", {
+	id: {
+		type: DataTypes.UUID,
+		defaultValue: UUIDV4,
+		primaryKey: true,
+		allowNull: false,
+	},
+	package: {
+		type: DataTypes.STRING(100),
+		allowNull: false,
+	},
+	price: {
+		type: DataTypes.INTEGER,
+		allowNull: false,
 	},
 });
 
@@ -138,6 +168,36 @@ Franchise.belongsTo(FranchiseCategory, {
 FranchiseCategory.hasMany(Franchise, {
 	foreignKey: "franchise_category_id",
 	as: "franchises",
+});
+
+Franchise.hasMany(Review, {
+	foreignKey: "franchise_id",
+	as: "reviews",
+});
+
+Review.belongsTo(Franchise, {
+	foreignKey: "franchise_id",
+	as: "franchise",
+});
+
+User.hasMany(Review, {
+	foreignKey: "user_id",
+	as: "reviews",
+});
+
+Review.belongsTo(User, {
+	foreignKey: "user_id",
+	as: "user",
+});
+
+Franchise.hasMany(FranchisePackage, {
+	foreignKey: "franchise_id",
+	as: "franchise_packages",
+});
+
+FranchisePackage.belongsTo(Franchise, {
+	foreignKey: "franchise_id",
+	as: "franchise",
 });
 
 module.exports = { User, Franchise, sequelize };
