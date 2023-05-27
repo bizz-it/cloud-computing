@@ -68,6 +68,7 @@ const createUser = async (data) => {
 					nama: user.nama,
 					email: user.email,
 					no_telp: user.no_telp,
+					foto: user.foto,
 					tempat_lahir: user.tempat_lahir,
 					tanggal_lahir: user.tanggal_lahir,
 					is_verified: user.is_verified,

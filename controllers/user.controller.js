@@ -84,6 +84,7 @@ userRouter.post("/login", async (req, res) => {
 					nama: user.data.nama,
 					email: user.data.email,
 					no_telp: user.data.no_telp,
+                    foto: user.data.foto,
 					tempat_lahir: user.data.tempat_lahir,
 					tanggal_lahir: user.data.tanggal_lahir,
 					is_verified: user.data.is_verified,
