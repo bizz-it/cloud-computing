@@ -43,20 +43,15 @@ const getUserByEmail = async (email) => {
 		const user = await User.findOne({ where: { email: email } });
 		if (user) {
 			return {
-				status: 200,
+				status: true,
+				statusCode: 200,
 				message: "User retrieved!",
 				data: user,
 			};
 		}
-		return {
-			status: 404,
-			message: "User not found!",
-		};
+		return { status: false, statusCode: 404, message: "User not found!" };
 	} catch (err) {
-		return {
-			status: 500,
-			message: err.message,
-		};
+		return { status: false, statusCode: 500, message: err.message };
 	}
 };
 
@@ -65,19 +60,31 @@ const createUser = async (data) => {
 		const user = await User.create(data);
 		if (user) {
 			return {
-				status: 201,
+				status: true,
+				statusCode: 201,
 				message: "User created!",
+				data: {
+					id: user.id,
+					nama: user.nama,
+					email: user.email,
+					no_telp: user.no_telp,
+					tempat_lahir: user.tempat_lahir,
+					tanggal_lahir: user.tanggal_lahir,
+					is_verified: user.is_verified,
+				},
 			};
 		}
 	} catch (err) {
 		if (err.name == "SequelizeUniqueConstraintError") {
 			return {
-				status: 400,
+				status: false,
+				statusCode: 400,
 				message: "Email already exist!",
 			};
 		}
 		return {
-			status: 500,
+			status: false,
+			statusCode: 500,
 			message: err,
 		};
 	}

@@ -32,10 +32,14 @@ userRouter.post("/register", async (req, res) => {
 
 	await User.createUser(data)
 		.then((response) => {
-			res.status(response.status).send(response);
+			if (response.statusCode === 201) {
+				res.status(201).send(response);
+			} else {
+				res.status(response.statusCode).send(response);
+			}
 		})
 		.catch((err) => {
-			res.send(err);
+			res.status(500).send(err);
 		});
 });
 
@@ -60,7 +64,7 @@ userRouter.post("/login", async (req, res) => {
 
 	try {
 		const user = await User.getUserByEmail(data.email);
-		if (user.status === 200) {
+		if (user.statusCode === 200) {
 			const validPassword = await bcrypt.compare(
 				data.password,
 				user.data.password
@@ -73,12 +77,15 @@ userRouter.post("/login", async (req, res) => {
 			const token = jwt.generateToken(user.data);
 			return res.status(200).send({
 				status: true,
+				statusCode: 200,
 				message: "Login success!",
 				data: {
 					id: user.data.id,
 					nama: user.data.nama,
 					email: user.data.email,
 					no_telp: user.data.no_telp,
+					tempat_lahir: user.data.tempat_lahir,
+					tanggal_lahir: user.data.tanggal_lahir,
 					is_verified: user.data.is_verified,
 				},
 				token: token,
