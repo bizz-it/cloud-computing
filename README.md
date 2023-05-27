@@ -20,14 +20,14 @@ git clone
 npm install
 ```
 
-3. Create `.env` file
-
-```bash
-touch .env
-```
+3. Create a `.env` file based on the `.env.example` file
 
 4. Run the development server
 
 ```bash
 npm run server
 ```
+
+## Documentation
+
+You can find the documentation for this API [here](https://documenter.getpostman.com/view/18875711/2s93m7ULc5#ccac4d22-9fd6-4849-bd30-3a498830aa77).
