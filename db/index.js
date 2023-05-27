@@ -53,6 +53,9 @@ const User = sequelize.define("users", {
 	tanggal_lahir: {
 		type: DataTypes.DATEONLY,
 	},
+	foto: {
+		type: DataTypes.STRING(100),
+	},
 	is_verified: {
 		type: DataTypes.BOOLEAN,
 		defaultValue: false,
