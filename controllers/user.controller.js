@@ -33,7 +33,8 @@ userRouter.post("/register", async (req, res) => {
 	await User.createUser(data)
 		.then((response) => {
 			if (response.statusCode === 201) {
-				res.status(201).send(response);
+				const token = jwt.generateToken(response.data);
+				res.status(201).send({ ...response, token });
 			} else {
 				res.status(response.statusCode).send(response);
 			}
@@ -84,7 +85,7 @@ userRouter.post("/login", async (req, res) => {
 					nama: user.data.nama,
 					email: user.data.email,
 					no_telp: user.data.no_telp,
-                    foto: user.data.foto,
+					foto: user.data.foto,
 					tempat_lahir: user.data.tempat_lahir,
 					tanggal_lahir: user.data.tanggal_lahir,
 					is_verified: user.data.is_verified,
@@ -99,5 +100,7 @@ userRouter.post("/login", async (req, res) => {
 		return res.status(500).send({ status: false, message: error.message });
 	}
 });
+
+
 
 module.exports = userRouter;
