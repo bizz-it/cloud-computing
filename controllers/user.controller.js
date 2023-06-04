@@ -34,13 +34,12 @@ userRouter.post("/register", async (req, res) => {
 		.then((response) => {
 			if (response.statusCode === 201) {
 				const token = jwt.generateToken(response.data);
-				res.status(201).send({ ...response, token });
-			} else {
-				res.status(response.statusCode).send(response);
+				return res.status(201).send({ ...response, token });
 			}
+			return res.status(response.statusCode).send(response);
 		})
 		.catch((err) => {
-			res.status(500).send(err);
+			return res.status(500).send(err);
 		});
 });
 
@@ -100,7 +99,5 @@ userRouter.post("/login", async (req, res) => {
 		return res.status(500).send({ status: false, message: error.message });
 	}
 });
-
-
 
 module.exports = userRouter;
