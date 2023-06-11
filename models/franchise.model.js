@@ -67,7 +67,7 @@ const createFranchise = async (data) => {
 		const franchise = await Franchise.create(data);
 
 		return {
-			status: 200,
+			status: 201,
 			message: "Franchise created!",
 			data: franchise,
 		};
@@ -83,7 +83,7 @@ const createFranchiseCategory = async (data) => {
 	try {
 		const franchiseCategory = await FranchiseCategory.create(data);
 		return {
-			status: 200,
+			status: 201,
 			message: "Franchise Category created!",
 			data: franchiseCategory,
 		};
@@ -99,7 +99,7 @@ const createFranchisePackage = async (data) => {
 	try {
 		const franchisePackage = await FranchisePackage.create(data);
 		return {
-			status: 200,
+			status: 201,
 			message: "Franchise Package created!",
 			data: franchisePackage,
 		};

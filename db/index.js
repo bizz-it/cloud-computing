@@ -95,7 +95,11 @@ const Franchise = sequelize.define("franchises", {
 		primaryKey: true,
 		allowNull: false,
 	},
-	company: {
+	nama: {
+		type: DataTypes.STRING(100),
+		allowNull: false,
+	},
+	logo: {
 		type: DataTypes.STRING(100),
 		allowNull: false,
 	},
@@ -105,7 +109,7 @@ const Franchise = sequelize.define("franchises", {
 	},
 	total_gerai: {
 		type: DataTypes.INTEGER,
-		allowNull: false,
+		defaultValue: 0,
 	},
 	deskripsi: {
 		type: DataTypes.STRING(100),
