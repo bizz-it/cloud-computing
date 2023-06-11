@@ -7,6 +7,7 @@ const { sequelize } = require("./db");
 const port = process.env.PORT || 3000;
 const userRoutes = require("./controllers/user.controller");
 const franchiseRoutes = require("./controllers/franchise.controller");
+const agreementRoutes = require("./controllers/agreement.controller");
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -24,6 +25,7 @@ sequelize
 
 app.use("/users", userRoutes);
 app.use("/franchises", franchiseRoutes);
+app.use("/agreements", agreementRoutes);
 
 app.get("*", (_req, res) => {
 	res.status(404).send("Not found");
