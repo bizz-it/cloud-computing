@@ -13,13 +13,17 @@ const verifyToken = (req, res, next) => {
 		req.headers["authorization"] ||
 		req.query.token;
 	if (!token) {
-		return res.status(403).send({ message: "No token provided!" });
+		return res
+			.status(403)
+			.send({ status: false, statusCode: 403, message: "No token provided!" });
 	}
 	token = String(token).replace(/Bearer\s/i, "");
 
 	jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
 		if (err) {
-			return res.status(401).send({ message: "Unauthorized!" });
+			return res
+				.status(401)
+				.send({ status: false, statusCode: 401, message: "Unauthorized!" });
 		}
 		req.userId = decoded.id;
 		next();
