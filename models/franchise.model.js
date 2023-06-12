@@ -17,14 +17,16 @@ const getAllFranchises = async () => {
 			],
 		});
 		return {
-			status: 200,
+			status: true,
+			statusCode: 200,
 			message: "Franchises retrieved!",
 			data: franchises,
 		};
 	} catch (err) {
 		return {
-			status: 500,
-			message: err,
+			status: false,
+			statusCode: 500,
+			message: err.message,
 		};
 	}
 };
@@ -45,18 +47,21 @@ const getFranchiseById = async (id) => {
 		});
 		if (franchise) {
 			return {
-				status: 200,
+				status: true,
+				statusCode: 200,
 				message: "Franchise retrieved!",
 				data: franchise,
 			};
 		}
 		return {
-			status: 404,
+			status: false,
+			statusCode: 404,
 			message: "Franchise not found!",
 		};
 	} catch (err) {
 		return {
-			status: 500,
+			status: false,
+			statusCode: 500,
 			message: err.message,
 		};
 	}
@@ -73,7 +78,45 @@ const createFranchise = async (data) => {
 		};
 	} catch (err) {
 		return {
-			status: 500,
+			status: false,
+			statusCode: 500,
+			message: err.message,
+		};
+	}
+};
+
+const getFranchisesByUserId = async (id) => {
+	try {
+		const franchises = await Franchise.findAll({
+			where: { user_id: id },
+			include: [
+				{
+					model: FranchiseCategory,
+					as: "franchise_category",
+				},
+				{
+					model: FranchisePackage,
+					as: "franchise_packages",
+				},
+			],
+		});
+		if (franchises) {
+			return {
+				status: true,
+				statusCode: 200,
+				message: "Franchises retrieved!",
+				data: franchises,
+			};
+		}
+		return {
+			status: false,
+			statusCode: 404,
+			message: "Franchises not found!",
+		};
+	} catch (err) {
+		return {
+			status: false,
+			statusCode: 500,
 			message: err.message,
 		};
 	}
@@ -89,7 +132,8 @@ const createFranchiseCategory = async (data) => {
 		};
 	} catch (err) {
 		return {
-			status: 500,
+			status: false,
+			statusCode: 500,
 			message: err.message,
 		};
 	}
@@ -99,13 +143,16 @@ const createFranchisePackage = async (data) => {
 	try {
 		const franchisePackage = await FranchisePackage.create(data);
 		return {
-			status: 201,
+			status: true,
+			statusCode: 201,
 			message: "Franchise Package created!",
 			data: franchisePackage,
 		};
 	} catch (err) {
+		console.log(err);
 		return {
-			status: 500,
+			status: false,
+			statusCode: 500,
 			message: err.message,
 		};
 	}
@@ -123,7 +170,8 @@ const updateFranchise = async (id, data) => {
 			};
 		}
 		return {
-			status: 404,
+			status: false,
+			statusCode: 404,
 			message: "Franchise not found!",
 		};
 	} catch (err) {
@@ -146,12 +194,14 @@ const updateFranchiseCategory = async (id, data) => {
 			};
 		}
 		return {
-			status: 404,
+			status: false,
+			statusCode: 404,
 			message: "Franchise Category not found!",
 		};
 	} catch (err) {
 		return {
-			status: 500,
+			status: false,
+			statusCode: 500,
 			message: err.message,
 		};
 	}
@@ -163,18 +213,21 @@ const updateFranchisePackage = async (id, data) => {
 		if (franchisePackage) {
 			const updatedFranchisePackage = await franchisePackage.update(data);
 			return {
-				status: 200,
+				status: true,
+				statusCode: 200,
 				message: "Franchise Package updated!",
 				data: updatedFranchisePackage,
 			};
 		}
 		return {
-			status: 404,
+			status: false,
+			statusCode: 404,
 			message: "Franchise Package not found!",
 		};
 	} catch (err) {
 		return {
-			status: 500,
+			status: false,
+			statusCode: 500,
 			message: err.message,
 		};
 	}
@@ -246,9 +299,38 @@ const deleteFranchisePackage = async (id) => {
 	}
 };
 
+const deleteFranchisePackageByFranchiseId = async (id) => {
+	try {
+		const franchisePackage = await FranchisePackage.destroy({
+			where: {
+				franchise_id: id,
+			},
+		});
+		if (franchisePackage) {
+			return {
+				status: true,
+				statusCode: 200,
+				message: "Franchise Package deleted!",
+			};
+		}
+		return {
+			status: false,
+			statusCode: 404,
+			message: "Franchise Package not found!",
+		};
+	} catch (err) {
+		return {
+			status: false,
+			statusCode: 500,
+			message: err.message,
+		};
+	}
+};
+
 module.exports = {
 	getAllFranchises,
 	getFranchiseById,
+	getFranchisesByUserId,
 	createFranchise,
 	createFranchiseCategory,
 	createFranchisePackage,
@@ -258,4 +340,5 @@ module.exports = {
 	deleteFranchise,
 	deleteFranchiseCategory,
 	deleteFranchisePackage,
+	deleteFranchisePackageByFranchiseId,
 };
