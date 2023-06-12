@@ -23,44 +23,47 @@ const sequelize = new Sequelize(
 	}
 );
 
-const User = sequelize.define("users", {
-	id: {
-		type: DataTypes.UUID,
-		defaultValue: UUIDV4,
-		primaryKey: true,
-		allowNull: false,
+const User = sequelize.define(
+	"users",
+	{
+		id: {
+			type: DataTypes.UUID,
+			defaultValue: UUIDV4,
+			primaryKey: true,
+			allowNull: false,
+		},
+		nama: {
+			type: DataTypes.STRING(100),
+			allowNull: false,
+		},
+		email: {
+			type: DataTypes.STRING(100),
+			allowNull: false,
+		},
+		password: {
+			type: DataTypes.STRING(100),
+			allowNull: false,
+		},
+		no_telp: {
+			type: DataTypes.STRING(15),
+			allowNull: false,
+		},
+		tempat_lahir: {
+			type: DataTypes.STRING(100),
+		},
+		tanggal_lahir: {
+			type: DataTypes.DATEONLY,
+		},
+		foto: {
+			type: DataTypes.STRING(100),
+		},
+		is_verified: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
+		},
 	},
-	nama: {
-		type: DataTypes.STRING(100),
-		allowNull: false,
-	},
-	email: {
-		type: DataTypes.STRING(100),
-		allowNull: false,
-		unique: true,
-	},
-	password: {
-		type: DataTypes.STRING(100),
-		allowNull: false,
-	},
-	no_telp: {
-		type: DataTypes.STRING(15),
-		allowNull: false,
-	},
-	tempat_lahir: {
-		type: DataTypes.STRING(100),
-	},
-	tanggal_lahir: {
-		type: DataTypes.DATEONLY,
-	},
-	foto: {
-		type: DataTypes.STRING(100),
-	},
-	is_verified: {
-		type: DataTypes.BOOLEAN,
-		defaultValue: false,
-	},
-});
+	{ indexes: [{ unique: true, fields: ["email"] }] }
+);
 
 const Otp = sequelize.define("otps", {
 	id: {
@@ -122,10 +125,6 @@ const Franchise = sequelize.define("franchises", {
 	dokumen: {
 		type: DataTypes.STRING(100),
 		allowNull: false,
-	},
-	is_verified: {
-		type: DataTypes.BOOLEAN,
-		defaultValue: false,
 	},
 });
 
