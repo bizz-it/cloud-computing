@@ -22,6 +22,13 @@ franchiseRouter.get("/:id", jwt.verifyToken, async (req, res) => {
 	return res.status(response.statusCode).send(response);
 });
 
+franchiseRouter.get("/:id/packages", jwt.verifyToken, async (req, res) => {
+	const response = await Franchise.getFranchisePackagesByFranchiseId(
+		req.params.id
+	);
+	return res.status(response.statusCode).send(response);
+});
+
 franchiseRouter.post(
 	"/",
 	jwt.verifyToken,
@@ -112,7 +119,7 @@ franchiseRouter.delete("/:id", jwt.verifyToken, async (req, res) => {
 	if (response.statusCode !== 200) {
 		return res.status(response.statusCode).send(response);
 	}
-	const responseFranchise = await Franchise.deleteFranchiseById(req.params.id);
+	const responseFranchise = await Franchise.deleteFranchise(req.params.id);
 
 	return res.status(responseFranchise.statusCode).send(responseFranchise);
 });

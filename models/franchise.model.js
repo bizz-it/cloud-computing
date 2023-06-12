@@ -67,6 +67,39 @@ const getFranchiseById = async (id) => {
 	}
 };
 
+const getFranchisePackagesByFranchiseId = async (id) => {
+	try {
+		const franchisePackages = await FranchisePackage.findAll({
+			where: { franchise_id: id },
+			include: [
+				{
+					model: Franchise,
+					as: "franchise",
+				},
+			],
+		});
+		if (franchisePackages) {
+			return {
+				status: true,
+				statusCode: 200,
+				message: "Franchise Packages retrieved!",
+				data: franchisePackages,
+			};
+		}
+		return {
+			status: false,
+			statusCode: 404,
+			message: "Franchise Packages not found!",
+		};
+	} catch (err) {
+		return {
+			status: false,
+			statusCode: 500,
+			message: err.message,
+		};
+	}
+};
+
 const createFranchise = async (data) => {
 	try {
 		const franchise = await Franchise.create(data);
@@ -331,6 +364,7 @@ module.exports = {
 	getAllFranchises,
 	getFranchiseById,
 	getFranchisesByUserId,
+	getFranchisePackagesByFranchiseId,
 	createFranchise,
 	createFranchiseCategory,
 	createFranchisePackage,
