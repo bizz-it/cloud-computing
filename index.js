@@ -14,10 +14,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const isProduction = process.env.NODE_ENV === "production";
+
 sequelize
-	.sync({ alter: true })
+	.sync({ alter: !isProduction })
 	.then(() => {
-		console.log("Drop and re-sync db.");
+		console.log(
+			isProduction
+				? "Database synced without altering."
+				: "Drop and re-sync db."
+		);
 	})
 	.catch((err) => {
 		console.log(err);
