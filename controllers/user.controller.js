@@ -1,6 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
 const User = require("../models/users.model");
+const Franchise = require("../models/franchise.model");
 const bcrypt = require("bcrypt");
 const jwt = require("../middleware/jwt");
 const joi = require("joi");
@@ -98,6 +99,11 @@ userRouter.post("/login", async (req, res) => {
 	} catch (error) {
 		return res.status(500).send({ status: false, message: error.message });
 	}
+});
+
+userRouter.get("/:id/franchises", jwt.verifyToken, async (req, res) => {
+	const response = await Franchise.getFranchisesByUserId(req.params.id);
+	return res.status(response.statusCode).send(response);
 });
 
 module.exports = userRouter;
