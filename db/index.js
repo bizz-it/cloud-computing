@@ -164,10 +164,6 @@ const Agreement = sequelize.define("agreements", {
 		type: DataTypes.UUID,
 		allowNull: false,
 	},
-	status: {
-		type: DataTypes.STRING(100),
-		allowNull: false,
-	},
 	users_location: {
 		type: DataTypes.STRING(100),
 		allowNull: false,
@@ -322,8 +318,19 @@ ForumReply.belongsTo(Franchise, {
 	as: "franchise",
 });
 
+User.hasMany(Otp, {
+	foreignKey: "user_id",
+	as: "otps",
+});
+
+Otp.belongsTo(User, {
+	foreignKey: "user_id",
+	as: "user",
+});
+
 module.exports = {
 	User,
+	Otp,
 	Franchise,
 	FranchiseCategory,
 	FranchisePackage,
