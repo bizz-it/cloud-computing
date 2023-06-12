@@ -12,12 +12,12 @@ const upload = multer({
 const jwt = require("../middleware/jwt");
 const joi = require("joi");
 
-franchiseRouter.get("/", jwt.verifyToken, async (_req, res) => {
+franchiseRouter.get("/", async (_req, res) => {
 	const response = await Franchise.getAllFranchises();
 	return res.status(response.statusCode).send(response);
 });
 
-franchiseRouter.get("/:id", jwt.verifyToken, async (req, res) => {
+franchiseRouter.get("/:id", async (req, res) => {
 	const response = await Franchise.getFranchiseById(req.params.id);
 	return res.status(response.statusCode).send(response);
 });
