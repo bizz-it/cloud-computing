@@ -26,6 +26,7 @@ const verifyToken = (req, res, next) => {
 				.send({ status: false, statusCode: 401, message: "Unauthorized!" });
 		}
 		req.userId = decoded.id;
+		req.email = decoded.sub;
 		next();
 	});
 };
