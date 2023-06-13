@@ -1,4 +1,4 @@
-const User = require("../db").User;
+const { User, Otp } = require("../db");
 
 const getAllUsers = async () => {
 	try {
@@ -94,19 +94,24 @@ const updateUser = async (id, data) => {
 		if (user) {
 			await user.update(data);
 			return {
-				status: 200,
+				status: true,
+				statusCode: 200,
 				message: "User updated!",
 				data: user,
 			};
 		} else {
 			return {
-				status: 404,
+				status: false,
+
+				statusCode: 404,
 				message: "User not found!",
 			};
 		}
 	} catch (err) {
 		return {
-			status: 500,
+			status: false,
+
+			statusCode: 500,
 			message: err.message,
 		};
 	}
@@ -126,6 +131,45 @@ const deleteUser = async (req, res) => {
 	}
 };
 
+const createOtp = async (data) => {
+	try {
+		const otp = await Otp.create(data);
+		if (otp) {
+			return {
+				status: true,
+				statusCode: 201,
+				message: "OTP created!",
+			};
+		}
+	} catch (err) {
+		return {
+			status: false,
+			statusCode: 500,
+			message: err,
+		};
+	}
+};
+
+const getOtpByUserId = async (id) => {
+	try {
+		const otp = await Otp.findOne({
+			where: { user_id: id },
+			order: [["created_at", "DESC"]],
+		});
+		if (otp) {
+			return {
+				status: true,
+				statusCode: 200,
+				message: "OTP retrieved!",
+				data: otp,
+			};
+		}
+		return { status: false, statusCode: 404, message: "OTP not found!" };
+	} catch (err) {
+		return { status: false, statusCode: 500, message: err };
+	}
+};
+
 module.exports = {
 	getAllUsers,
 	getUserById,
@@ -133,4 +177,6 @@ module.exports = {
 	createUser,
 	updateUser,
 	deleteUser,
+	createOtp,
+	getOtpByUserId,
 };
