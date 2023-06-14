@@ -115,11 +115,11 @@ const Franchise = sequelize.define("franchises", {
 		defaultValue: 0,
 	},
 	deskripsi: {
-		type: DataTypes.STRING(100),
+		type: DataTypes.STRING(1000),
 		allowNull: false,
 	},
 	requirement: {
-		type: DataTypes.STRING(100),
+		type: DataTypes.STRING(1000),
 		allowNull: false,
 	},
 	dokumen: {
@@ -165,7 +165,7 @@ const Agreement = sequelize.define("agreements", {
 		allowNull: false,
 	},
 	users_location: {
-		type: DataTypes.STRING(100),
+		type: DataTypes.STRING(200),
 		allowNull: false,
 	},
 	users_photo_location: {
@@ -190,7 +190,7 @@ const ForumDiscussion = sequelize.define("forum_discussions", {
 		allowNull: false,
 	},
 	discussion: {
-		type: DataTypes.STRING(100),
+		type: DataTypes.STRING(200),
 		allowNull: false,
 	},
 });
@@ -213,7 +213,7 @@ const ForumReply = sequelize.define("forum_replies", {
 		allowNull: false,
 	},
 	reply: {
-		type: DataTypes.STRING(100),
+		type: DataTypes.STRING(200),
 		allowNull: false,
 	},
 });
