@@ -272,17 +272,20 @@ const deleteFranchise = async (id) => {
 		if (franchise) {
 			await franchise.destroy();
 			return {
-				status: 200,
+				status: true,
+				statusCode: 200,
 				message: "Franchise deleted!",
 			};
 		}
 		return {
-			status: 404,
+			status: false,
+			statusCode: 404,
 			message: "Franchise not found!",
 		};
 	} catch (err) {
 		return {
-			status: 500,
+			status: false,
+			statusCode: 500,
 			message: err.message,
 		};
 	}
@@ -339,6 +342,7 @@ const deleteFranchisePackageByFranchiseId = async (id) => {
 				franchise_id: id,
 			},
 		});
+		console.log(franchisePackage);
 		if (franchisePackage) {
 			return {
 				status: true,
