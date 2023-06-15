@@ -59,7 +59,7 @@ npm run server
 
 ## API Documentation
 
-You can find the documentation for this API [here](https://documenter.getpostman.com/view/18875711/2s93m7ULc5#ccac4d22-9fd6-4849-bd30-3a498830aa77).
+You can find the documentation for this API [here](https://documenter.getpostman.com/view/18875711/2s93m7ULc5).
 
 ## GCP Deployment
 
