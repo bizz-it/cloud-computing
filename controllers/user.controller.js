@@ -44,7 +44,6 @@ userRouter.post("/register", async (req, res) => {
 			return res.status(500).send(err);
 		});
 });
-
 userRouter.post("/login", async (req, res) => {
 	const schema = joi.object({
 		email: joi.string().email().required(),

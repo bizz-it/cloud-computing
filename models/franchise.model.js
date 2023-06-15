@@ -268,17 +268,20 @@ const updateFranchisePackage = async (id, data) => {
 
 const deleteFranchise = async (id) => {
 	try {
+        //delete files from
+
 		const franchise = await Franchise.findByPk(id);
+        
 		if (franchise) {
-			await franchise.destroy();
+            await franchise.destroy();
 			return {
-				status: true,
+                status: true,
 				statusCode: 200,
 				message: "Franchise deleted!",
 			};
 		}
 		return {
-			status: false,
+            status: false,
 			statusCode: 404,
 			message: "Franchise not found!",
 		};
