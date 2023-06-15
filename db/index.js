@@ -103,11 +103,11 @@ const Franchise = sequelize.define("franchises", {
 		allowNull: false,
 	},
 	logo: {
-		type: DataTypes.STRING(100),
+		type: DataTypes.STRING(200),
 		allowNull: false,
 	},
 	foto: {
-		type: DataTypes.STRING(100),
+		type: DataTypes.STRING(200),
 		allowNull: false,
 	},
 	total_gerai: {
@@ -123,7 +123,7 @@ const Franchise = sequelize.define("franchises", {
 		allowNull: false,
 	},
 	dokumen: {
-		type: DataTypes.STRING(100),
+		type: DataTypes.STRING(200),
 		allowNull: false,
 	},
 });
@@ -169,11 +169,11 @@ const Agreement = sequelize.define("agreements", {
 		allowNull: false,
 	},
 	users_photo_location: {
-		type: DataTypes.STRING(100),
+		type: DataTypes.STRING(200),
 		allowNull: false,
 	},
 	agreement_document: {
-		type: DataTypes.STRING(100),
+		type: DataTypes.STRING(200),
 		allowNull: false,
 	},
 });
